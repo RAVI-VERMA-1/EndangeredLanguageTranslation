@@ -54,12 +54,18 @@ const TranslatedSentance = styled.p`
 
 // const DIVMAIN = styled.div``;
 function App() {
-  const [query, setQuery] = useState("");
+  let [query, setQuery] = useState("");
   const [translatedPara, setTranslatedPara] = useState("");
   if (query.includes(" ")) {
     setQuery("");
   }
-  const { data } = useToto(query, setQuery, translatedPara, setTranslatedPara);
+  // query = query.toLowerCase();
+  const { data } = useToto(
+    query.toLowerCase(),
+    setQuery,
+    translatedPara,
+    setTranslatedPara
+  );
   translatedPara != "" ? console.log(translatedPara) : "";
 
   return (
