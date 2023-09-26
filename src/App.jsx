@@ -39,6 +39,8 @@ const Input = styled.input`
   font-weight: 500;
 `;
 
+const Span = styled.span``;
+
 const Main = styled.main`
   /* border: 2px solid #000; */
 `;
@@ -66,12 +68,12 @@ function App() {
     translatedPara,
     setTranslatedPara
   );
-  translatedPara != "" ? console.log(translatedPara) : "";
+  // translatedPara != "" ? console.log(translatedPara) : "";
 
   return (
     <DIV1>
       <Nav>
-        <H2>Endagered language Translation</H2>
+        <H2>Endangered language Translation</H2>
         <SearchBar query={query} setQuery={setQuery} />
       </Nav>
       <Main>
@@ -87,6 +89,7 @@ function SearchBar({ query, setQuery }) {
   return (
     <ToSearch>
       <Input
+        className="focus:ring focus:ring focus:ring-green-300"
         autoFocus
         type="text"
         value={query}
@@ -138,10 +141,12 @@ function List({ data, query, setQuery }) {
       </h2>
       <h2 className="mt-12">
         <span className="text-xl font-bold">Toto Word:</span>
-        <span className="text-xl font-Roboto-cursue">
-          {" "}
-          {query && data.length > 0 && data[0]?.toto}
-        </span>
+        {query && (
+          <span className="text-xl font-Roboto-cursue">
+            {" "}
+            {query && data.length > 0 ? data[0]?.toto : "Not found!!"}
+          </span>
+        )}
       </h2>
     </>
   );
