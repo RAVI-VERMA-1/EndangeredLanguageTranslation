@@ -1,6 +1,8 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import styled from "styled-components";
-import supabase from "./supabase";
+import useToto from "./apiCall";
+import SearchBar from "./Components/SearchBar";
+import DIVMAIN from "./Components/CommulativePara";
 import "./index.css";
 const Nav = styled.nav`
   display: flex;
@@ -23,35 +25,15 @@ const DIV1 = styled.div`
   height: 100vh;
 `;
 
-const ToSearch = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  column-gap: 4rem;
-`;
-const Input = styled.input`
-  display: inline-block;
-  border: 2px solid #000;
-  border-radius: 7px;
-  width: 20rem;
-  font-size: 20px;
-  padding: 3px 6px;
-  font-family: "Nunito";
-  font-weight: 500;
+const About = styled.a`
+  color: blue;
+  font-weight: 400px;
 `;
 
-const Span = styled.span``;
+// const Span = styled.span``;
 
 const Main = styled.main`
   /* border: 2px solid #000; */
-`;
-const TranslatedSentance = styled.p`
-  font-size: 16px;
-  font-weight: 500;
-  font-family: "Inter";
-  border: 2px dashed #000;
-  height: 20vh;
-  padding: 5px 15px;
-  color: green;
 `;
 
 // const DIVMAIN = styled.div``;
@@ -75,6 +57,9 @@ function App() {
       <Nav>
         <H2>Endangered language Translation</H2>
         <SearchBar query={query} setQuery={setQuery} />
+        <About href="https://en.wikipedia.org/wiki/Toto_language">
+          About Toto 📚
+        </About>
       </Nav>
       <Main>
         <List data={data} query={query} setQuery={setQuery} />
@@ -83,53 +68,6 @@ function App() {
       <DIVMAIN translatedPara={translatedPara} />
     </DIV1>
   );
-}
-
-function SearchBar({ query, setQuery }) {
-  return (
-    <ToSearch>
-      <Input
-        className="focus:ring focus:ring focus:ring-green-300"
-        autoFocus
-        type="text"
-        value={query}
-        onChange={(e) => setQuery(e.target.value)}
-        placeholder="Enter english word..."
-      />
-      {/* <Input
-        type="text"
-        value={query}
-        onChange={(e) => setQuery(e.target.value)}
-        placeholder="Enter toto word..."
-      /> */}
-    </ToSearch>
-  );
-}
-
-function useToto(query, setQuery, translatedPara, setTranslatedPara) {
-  const [data, setData] = useState([]);
-  useEffect(
-    function () {
-      async function totoData() {
-        let { data: vocab } = await supabase
-          .from("vocab")
-          .select("toto")
-          .eq("english", query);
-        // console.log(query);
-        // console.log(data);
-        console.log(vocab);
-        // vocab?.length > 0 && console.log(data);
-        setData(vocab);
-        if (data?.length > 0 && !translatedPara.includes(data[0].toto)) {
-          setTranslatedPara((i) => i + " " + data[0]?.toto);
-        }
-      }
-      totoData();
-    },
-    [query]
-  );
-
-  return { data };
 }
 
 function List({ data, query, setQuery }) {
@@ -152,12 +90,4 @@ function List({ data, query, setQuery }) {
   );
 }
 
-function DIVMAIN({ translatedPara }) {
-  return (
-    <div className="mt-12">
-      <p className="text-xl font-bold mb-4">commulative sentance:</p>
-      <TranslatedSentance>{translatedPara}</TranslatedSentance>
-    </div>
-  );
-}
 export default App;
