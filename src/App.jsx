@@ -82,7 +82,11 @@ function List({ data, query, setQuery }) {
         {query && (
           <span className="text-xl font-Roboto-cursue">
             {" "}
-            {query && data.length > 0 ? data[0]?.toto : "Not found!!"}
+            {query && data.length > 0 ? (
+              data[0]?.toto
+            ) : (
+              <span className="text-xl text-red-500 ">Not found!!😴</span>
+            )}
           </span>
         )}
       </h2>
