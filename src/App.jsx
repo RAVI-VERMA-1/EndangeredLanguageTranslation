@@ -85,7 +85,7 @@ function List({ data, query, setQuery }) {
             {query && data.length > 0 ? (
               data[0]?.toto
             ) : (
-              <span className="text-xl text-red-500 ">Not found!!😴</span>
+              <span className="text-xl text-red-500 ">Not found!!</span>
             )}
           </span>
         )}
